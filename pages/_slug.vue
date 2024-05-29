@@ -1,9 +1,9 @@
 <template>
-  <p>Home</p>
+  <p>{{ $route.params.slug }}</p>
 </template>
 
 <script>
 export default {
-  name: 'IndexPage'
+  name: 'ArticlePage',
 }
 </script>

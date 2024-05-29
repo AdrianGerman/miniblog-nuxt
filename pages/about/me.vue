@@ -1,9 +1,9 @@
 <template>
-  <p>Home</p>
+  <p>About me</p>
 </template>
 
 <script>
 export default {
-  name: 'IndexPage'
+  name: 'AboutMe'
 }
 </script>
