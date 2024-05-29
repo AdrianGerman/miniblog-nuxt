@@ -1,0 +1,3 @@
+<template>
+  <div class="about-me">About me</div>
+</template>
