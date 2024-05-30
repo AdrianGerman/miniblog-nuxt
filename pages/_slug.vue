@@ -36,6 +36,7 @@ export default {
       },
     }
   },
+  //meta tags
   head() {
     return {
       title: this.post?.title,
