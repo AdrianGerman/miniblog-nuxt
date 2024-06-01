@@ -18,7 +18,11 @@ export default {
     }
   },
   async mounted() {
-    const url = `http://localhost:9999/.netlify/functions/articles`
+    const baseUrl =
+      location.hostname === 'localhost'
+        ? 'http://localhost:9999'
+        : 'https://miniblog-platzi.netlify.app'
+    const url = `${baseUrl}/.netlify/functions/articles`
     const { articles } = await this.$http.$get(url)
     this.articles = articles.map((a) => ({
       ...a,
