@@ -23,6 +23,12 @@ export default {
   components: {
     VueMarkdown,
   },
+  asyncData({ params, $http }) {
+    const { slug } = params
+    const article = $http.$get(`http://localhost:9999/.netlify/functions/article?slug=${slug}`)
+    console.log('article =>', article);
+    return article
+  },
   data() {
     return {
       post: {
@@ -31,7 +37,7 @@ export default {
         author: 'Adrian German',
         updated: '30/05/2024',
         description: 'lorem ispum dolor sit amet',
-        cover: 'https://via.placeholder.com/1024x420',
+        cover: 'https://via.placeholder.com/1024x420/',
         content: '# Title\n\n## Second title\n\nLorem ipsum dolor sit amet',
       },
     }
