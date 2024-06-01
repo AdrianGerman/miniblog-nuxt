@@ -15,7 +15,7 @@ export default {
   async asyncData({ isDev, $http }) {
     const baseUrl = isDev
       ? 'http://localhost:9999'
-      : 'https://miniblog-platzi.netlify.app'
+      : 'https://miniblog-nuxt2.netlify.app'
     const url = `${baseUrl}/.netlify/functions/articles`
     const { articles } = await $http.$get(url)
     return {
@@ -38,7 +38,7 @@ export default {
   //   const baseUrl =
   //       location.hostname === 'localhost'
   //         ? 'http://localhost:9999'
-  //         : 'https://miniblog-platzi.netlify.app'
+  //         : 'https://miniblog-nuxt2.netlify.app'
   //   const url = `${baseUrl}/.netlify/functions/articles`
   //   const { articles } = await this.$http.$get(url)
   //   this.articles = articles.map((a) => ({
