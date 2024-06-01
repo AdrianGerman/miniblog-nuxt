@@ -12,25 +12,42 @@
 <script>
 export default {
   name: 'IndexPage',
-  data() {
+  async asyncData({ isDev, $http }) {
+    const baseUrl = isDev
+      ? 'http://localhost:9999'
+      : 'https://miniblog-platzi.netlify.app'
+    const url = `${baseUrl}/.netlify/functions/articles`
+    const { articles } = await $http.$get(url)
     return {
-      articles: [],
+      posts: articles,
     }
   },
-  async mounted() {
-    const baseUrl =
-      location.hostname === 'localhost'
-        ? 'http://localhost:9999'
-        : 'https://miniblog-platzi.netlify.app'
-    const url = `${baseUrl}/.netlify/functions/articles`
-    const { articles } = await this.$http.$get(url)
-    this.articles = articles.map((a) => ({
-      ...a,
-      author: a['author-name'][0],
-      date: new Date(a.updated),
-      cover: a.cover[0]?.thumbnails.large.url,
-    }))
-  }
+  computed: {
+    articles() {
+      return Array.isArray(this.posts)
+        ? this.posts.map((a) => ({
+          ...a,
+          author: a['author-name'][0],
+          date: new Date(a.updated),
+          cover: a.cover[0]?.thumbnails.large.url,
+        }))
+        : []
+    },
+  },
+  // async mounted() {
+  //   const baseUrl =
+  //       location.hostname === 'localhost'
+  //         ? 'http://localhost:9999'
+  //         : 'https://miniblog-platzi.netlify.app'
+  //   const url = `${baseUrl}/.netlify/functions/articles`
+  //   const { articles } = await this.$http.$get(url)
+  //   this.articles = articles.map((a) => ({
+  //     ...a,
+  //     author: a['author-name'][0],
+  //     date: new Date(a.updated),
+  //     cover: a.cover[0]?.thumbnails.large.url,
+  //   }))
+  // },
 }
 </script>
 
@@ -41,9 +58,9 @@ export default {
 
 .container .content {
   @apply flex flex-col justify-center items-center sm:p-2 md:p-4 lg:p-8 xl:p-16;
-}
 
-main {
-  @apply max-w-5xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
+  main {
+    @apply max-w-5xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
 }
 </style>
