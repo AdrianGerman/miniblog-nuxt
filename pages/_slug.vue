@@ -12,6 +12,18 @@
         <figcaption>Portada - {{ post.title }}</figcaption>
       </figure>
       <VueMarkdown class="markdown">{{ post.content }}</VueMarkdown>
+      <div ref="comments" class="comments">
+        <h3 class="title">Comentarios</h3>
+        <p class="total-comments">
+          Hay {{ article['total-comments'] || 0 }} comentarios
+        </p>
+        <div class="comments-list">
+          <CommentItem v-for="comment in comments" :key="comment._id" v-bind="comment" />
+        </div>
+        <div class="add-comment">
+          <InputComment @submit="createComment" />
+        </div>
+      </div>
     </article>
   </div>
 </template>
@@ -60,6 +72,14 @@ export default {
         content: this.article?.content
       }
     }
+  },
+  methods: {
+    async createComment(comment) {
+      await fetch(
+        `http://localhost:9999/.netlify/functions/comment?article=${this.article._id}`,
+        { method: 'post', body: JSON.stringify(comment) }
+      )
+    },
   }
 }
 </script>
