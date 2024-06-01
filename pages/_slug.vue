@@ -29,19 +29,19 @@ export default {
     console.log('article =>', article);
     return article
   },
-  data() {
-    return {
-      post: {
-        slug: 'mi-primer-post',
-        title: 'Mi primer post',
-        author: 'Adrian German',
-        updated: '30/05/2024',
-        description: 'lorem ispum dolor sit amet',
-        cover: 'https://via.placeholder.com/1024x420/',
-        content: '# Title\n\n## Second title\n\nLorem ipsum dolor sit amet',
-      },
-    }
-  },
+  // data() {
+  //   return {
+  //     post: {
+  //       slug: 'mi-primer-post',
+  //       title: 'Mi primer post',
+  //       author: 'Adrian German',
+  //       updated: '30/05/2024',
+  //       description: 'lorem ispum dolor sit amet',
+  //       cover: 'https://via.placeholder.com/1024x420/',
+  //       content: '# Title\n\n## Second title\n\nLorem ipsum dolor sit amet',
+  //     },
+  //   }
+  // },
   //meta tags
   head() {
     return {
@@ -49,6 +49,18 @@ export default {
       meta: [{ name: 'description', content: this.post?.description || '' }]
     }
   },
+  computed: {
+    post() {
+      return {
+        title: this.article?.title,
+        author: this.article['author-name'][0],
+        updated: new Date(this.article?.updated).toLocaleDateString(),
+        description: this.article?.description,
+        cover: this.article?.cover[0].thumbnails.full.url,
+        content: this.article?.content
+      }
+    }
+  }
 }
 </script>
 
